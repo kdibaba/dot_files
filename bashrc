@@ -117,5 +117,5 @@ parse_git_branch ()
     /usr/bin/git branch 2> /dev/null | grep '*' | sed "s/*\ \(.*\)/$(parse_git_dirty)\1/"
 }
 e=\\\03\3
-export PS1="\[\033[35m\].-(\[\033[33m\]\w\n\[\033[35m\]\\\`\u@\h \[\033[36m\]\T\[\033[35m\] $(parse_git_branch))\[\033[35m\]-->\[\033[0m\]"
+export PS1="\[\033[1;33m\].-(\[\033[0;37m\]\w\n\[\033[1;33m\]\\\`\u@\h \[\033[1;33m\]\T\[\033[1;33m\] $(parse_git_branch))\[\033[1;33m\]-->\[\033[0;37m\]"
 
