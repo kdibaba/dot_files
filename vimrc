@@ -30,6 +30,10 @@ set nostartofline " don't jump to the start of a line when scrolling
 "vnoremap <F1> <ESC>
 " quick <esc> out by hitting kj
 imap kj <ESC>
+" ctrl-s to save and ctrl-q to quit
+nmap ss :w<CR>
+nmap qq :q<CR>
+
 " code folding
 set foldmethod=indent
 set foldlevel=99
@@ -96,8 +100,8 @@ nmap <S-Tab> <<
 imap <S-Tab> <Esc><<i
 
 " splitting screens
-nmap vv :vsplit .
-nmap ss :split .
+nmap vs :vsplit .<CR>
+nmap hs :split .<CR>
 
 " moving between screens
 nmap <M-h> <C-w>h
