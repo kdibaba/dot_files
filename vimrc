@@ -37,6 +37,7 @@ nmap qq :q<CR>
 " code folding
 set foldmethod=indent
 set foldlevel=99
+
 map <C-k> <C-w><Up>
 map <C-j> <C-w><Down>
 map <C-l> <C-w><Right>
