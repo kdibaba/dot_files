@@ -1,0 +1,14 @@
+[ui]
+# show changed files and be a bit more verbose if True
+verbose=True
+# username data to appear in comits
+# it usually takes the form: "Joe User <joe.user at host.com>"
+username="Kiumma Dibaba <kdibaba at gmail.com>"
+
+[auth]
+bitbucket.prefix = https://bitbucket.org/kdibaba/
+bitbucket.username = kdibaba
+bitbucket.password = Kiu11mma
+
+[web]
+cacerts = /etc/ssl/certs/ca-certificates.crt
