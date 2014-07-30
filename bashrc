@@ -1,124 +1,186 @@
-# ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
-bind -r '\C-s'
-stty -ixon
+[[ -f /etc/bash/bashrc ]] && . /etc/bash/bashrc
 
-# If not running interactively, don't do anything
-[ -z "$PS1" ] && return
-
-# don't put duplicate lines in the history. See bash(1) for more options
-# ... or force ignoredups and ignorespace
-HISTCONTROL=ignoredups:ignorespace
-
-# append to the history file, don't overwrite it
-shopt -s histappend
-
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
-
-# check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
-shopt -s checkwinsize
-
-# make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
-
-# set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
-    debian_chroot=$(cat /etc/debian_chroot)
+if [[ $- != *i* ]]; then
+    return
 fi
 
-# set a fancy prompt (non-color, unless we know we "want" color)
-case "$TERM" in
-    xterm-color) color_prompt=yes;;
-esac
+# complete sudo commands
+complete -cf sudo
 
-# uncomment for a colored prompt, if the terminal has the capability; turned
-# off by default to not distract the user: the focus in a terminal window
-# should be on the output of commands, not on the prompt
-#force_color_prompt=yes
+# vim bindings for shell
+set -o vi
+shopt -s cdspell
 
-if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
-    else
-	color_prompt=
-    fi
-fi
 
-if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;30m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+# Path
+PATH="/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/sbin:/usr/sbin"
+test -d "/opt/bin" &&
+PATH="$PATH:/opt/bin"
+test -d "$HOME/bin" &&
+PATH="$HOME/bin:$PATH"
+export PATH
+
+
+# Editor and Pager
+EDITOR="vim"
+export EDITOR
+# Less Colors for Man Pages
+export LESS_TERMCAP_mb=$'\e[1;31m'       # begin blinking
+export LESS_TERMCAP_md=$'\e[1;'  # begin bold
+export LESS_TERMCAP_me=$'\e[0m'           # end mode
+export LESS_TERMCAP_se=$'\e[0m'           # end standout-mode
+export LESS_TERMCAP_so=$'\e[38;5;246m'    # begin standout-mode - info box
+export LESS_TERMCAP_ue=$'\e[0m'           # end underline
+export LESS_TERMCAP_us=$'\e[04;38;5;146m' # begin underline
+PAGER="less -FirSwX"
+
+MANPAGER="$PAGER"
+export PAGER MANPAGER
+
+
+# Prompt and window title of X terminals
+
+# Default prompt
+if [[ ${EUID} == 0 ]]; then
+    PS1='\[\e[01;31m\]\$\[\e[0m\] '
 else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-fi
-unset color_prompt force_color_prompt
-
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    ;;
-*)
-    ;;
-esac
-
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
-
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-    alias hibernate='sudo pm-hibernate'
+    PS1='\[\e[0m\]\$ '
 fi
 
-# some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
+# If sshed include hostname
+if [[ "$SSH_CLIENT" ]]; then
+    PS1="\[\e[0;31m\]\h$PS1"
 
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
+    case ${TERM} in
+        xterm*|rxvt*)
+            PROMPT_COMMAND='echo -ne "\033]0;${HOSTNAME}|${PWD/#$HOME/~}\007"'
+            ;;
+        screen*)
+            PROMPT_COMMAND='echo -ne "\033_;${HOSTNAME}|${PWD/#$HOME/~}\033\\"'
+            ;;
+    esac
+else
+    case ${TERM} in
+        xterm*|rxvt*)
+            PROMPT_COMMAND='echo -ne "\033]0;${PWD/#$HOME/~}\007"'
+            ;;
+        screen*)
+            PROMPT_COMMAND='echo -ne "\033_;${PWD/#$HOME/~}\033\\"'
+            ;;
+    esac
 fi
 
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
-#if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
-#    . /etc/bash_completion
-#fi
-
-#virtualenvwrapper stuff
-export WORKON_HOME=~/Envs
-if [ -f/usr/local/bin/virtualenvwrapper.sh ]; then
-    source /usr/local/bin/virtualenvwrapper.sh
+# Fancy git prompt if installed
+if [[ -f $HOME/.bash-git-prompt/gitprompt.sh ]]; then
+    GIT_PROMPT_ONLY_IN_REPO=0
+    source $HOME/.bash-git-prompt/gitprompt.sh
 fi
 
-# Things for python virtualenv
-export PIP_REQUIRE_VIRTUALENV=true
-export PIP_RESPECT_VIRTUALENV=true
+# Aliases
+alias ls='ls -F --color=auto'    #colors
+alias l='ls -F --color=auto'    #colors
+alias ll='ls -lsah --color=auto'  #long list
+alias la='ls -AF --color=auto'  #show hidden
+alias lx='ls -lXB --color=auto'  #sort by sextension
+alias lk='ls -lSr --color=auto'  #sort by size biggest last
+alias lc='ls -ltcr --color=auto' #sort by and show chagne times
+alias lu='ls -ltur --color=auto' #sort by and show access time
+alias lt='ls -ltr --color=auto'  #sort by date
+alias lm='ls -al |more'          #pipe through more
+alias lr='ls -lR'                #recursive
+alias tree='tree -Csuh'          #alternative to recursive ls
+alias df='df -kTh'
+alias path='echo -e ${PATH//:/\\n}'
+alias grep='grep --color=auto'
 
-pearse_git_dirty ()
-{
-    [[ $(/usr/bin/git status 2> /dev/null | tail -n1) != "nothing to commit, working directory clean" ]] && echo "*"
+# Silly sudo
+alias mount='sudo mount'
+alias umount='sudo umount'
+alias emerge='sudo emerge'
+alias eix='sudo eix -F'
+alias eix-sync='sudo eix-sync'
+alias eix-update='sudo eix-update'
+alias rc-update='sudo rc-update'
+alias revdep-rebuild='sudo revdep-rebuild'
+alias salt='sudo salt'
+alias salt-key='sudo salt-key'
+alias salt-cloud='sudo salt-cloud'
+alias salt-run='sudo salt-run'
+alias salt-call='sudo salt-call'
+alias hald='sudo hald --daemon=yes --verbose=yes'
+
+# Program defaults
+alias preview='feh -g 700x700 -d'
+alias mkisofs-qick='mkisofs -R -l -J'
+alias bundleupdate='vim -c BundleUpdate -c qa'
+
+# To keep typos alive
+alias snv="svn"
+alias cim="vim"
+alias bim="vim"
+alias svim="vim"
+alias vom="vim"
+alias suod="sudo"
+alias sduo="sudo"
+alias vm="mv"
+alias got='git'
+
+# Django shortcuts
+alias runserver="./manage.py runserver"
+alias prunserver="./manage.py runserver 0.0.0.0:8000"
+
+# For spectrwm
+unset LD_PRELOAD
+
+# Get some bash completion
+# Use eselect bashcomp to manage symlinks
+[[ -f /etc/profile.d/bash-completion.sh ]] && source /etc/profile.d/bash-completion.sh
+
+if [[ -f /usr/bin/fortune ]]; then
+    command fortune 95% calvin firefly
+fi
+
+[[ -f $HOME/.bashrc_extra ]] && source $HOME/.bashrc_extra
+
+#function cd(){
+#    if [[ $# -eq 0 ]]; then
+#        builtin cd $(git rev-parse --show-toplevel 2> /dev/null)
+#    else
+#        builtin cd "$@"
+#    fi
+#}
+
+function ve() {
+    # Use cwd for virtualenv name
+    venv_name=${PWD##*/}
+
+    # If this virtualenv is not active
+    if [[ "$VIRTUAL_ENV" != "$PWD/.pyenv/$venv_name" ]]; then
+
+        # Deactivate current virtualenv
+        [[ $VIRTUAL_ENV ]] && deactivate
+
+        # Create new virtualenv if needed
+        [[ ! -f .pyenv/$venv_name/bin/activate ]] && rm -rf .pyenv && virtualenv .pyenv/$venv_name
+
+        # Activate virtualenv
+        source .pyenv/$venv_name/bin/activate
+
+    fi
+    # Install requirements.txt if available
+    [[ -f requirements.txt ]] && $(which pip) install -r requirements.txt &> /dev/null
+
+    # Install dev_requirements.txt if available
+    [[ -f dev_requirements.txt ]] && $(which pip) install -r dev_requirements.txt &> /dev/null
+
+    # Install monetization requirements if available
+    echo "should install apps.txt"
+    if [[ -f monetization/requirements/apps.txt ]]; then
+        echo "installing apps.txt"
+        $(which pip) install -r monetization/requirements/apps.txt 
+    fi
 }
-parse_git_branch ()
-{
-    /usr/bin/git branch 2> /dev/null | grep '*' | sed "s/*\ \(.*\)/$(parse_git_dirty)\1/"
-}
-e=\\\03\3
-export PS1="\[\033[1;33m\].-(\[\033[0;37m\]\w\n\[\033[1;33m\]\\\`\u@\h \[\033[1;33m\]\T\[\033[1;33m\] $(parse_git_branch))\[\033[1;33m\]-->\[\033[0;37m\]"
 
+function rmpyc() {
+    find . -name "*.pyc" -exec rm -rf {} \;
+}
