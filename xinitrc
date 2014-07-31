@@ -25,10 +25,10 @@ fi
 
 xset +fp /usr/share/fonts/terminus/
 
-# Multi monitor setup
-xrandr --output DFP6 --auto
-xrandr --output DFP5 --auto --right-of DFP6
-xrandr --output DFP1 --auto --left-of DFP6
+## Multi monitor setup
+xrandr --output DFP11 --auto
+#xrandr --output DFP10 --auto --right-of DFP11
+xrandr --output DFP10 --auto --left-of DFP11
 
 # run random wallpapers by duration
 exec /usr/bin/spectrwm 2&> $HOME/.spectrwm.log

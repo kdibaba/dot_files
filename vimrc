@@ -71,7 +71,7 @@ highlight DiffText   cterm=bold ctermfg=black ctermbg=lightgray
 highlight DiffDelete cterm=bold ctermfg=black ctermbg=darkred
 
 " Underline the cursor line
-highlight CursorLine cterm=underline
+highlight CursorLine ctermbg=darkgrey cterm=NONE
 
 " Extra white space
 highlight OverLength      ctermbg=red
