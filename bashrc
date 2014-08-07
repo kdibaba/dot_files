@@ -125,9 +125,6 @@ alias sduo="sudo"
 alias vm="mv"
 alias got='git'
 
-# Git Aliases
-alias "git ci"="git commit -a"
-
 # Django shortcuts
 alias runserver="./manage.py runserver"
 alias prunserver="./manage.py runserver 0.0.0.0:8000"

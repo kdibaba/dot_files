@@ -1,0 +1,13 @@
+#!/bin/sh
+COUNTER=0
+RANGE=`ls ~/grive/wallpapers/ubuntu/ | wc -l`
+RANDOM_NUMBER=$RANDOM
+let "RANDOM_NUMBER %= $RANGE"
+for files in `ls -b ~/grive/wallpapers/ubuntu/`
+do
+COUNTER=$((COUNTER+1))
+if [ $COUNTER -eq $RANDOM_NUMBER ]; then
+    echo "$files"
+    gsettings set org.gnome.desktop.background picture-uri file:///home/qma/grive/wallpapers/gentoo/$files
+fi
+done
