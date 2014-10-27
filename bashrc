@@ -129,26 +129,9 @@ alias got='git'
 alias runserver="./manage.py runserver"
 alias prunserver="./manage.py runserver 0.0.0.0:8000"
 
-# For spectrwm
-unset LD_PRELOAD
-
 # Get some bash completion
 # Use eselect bashcomp to manage symlinks
 [[ -f /etc/profile.d/bash-completion.sh ]] && source /etc/profile.d/bash-completion.sh
-
-if [[ -f /usr/bin/fortune ]]; then
-    command fortune 95% calvin firefly
-fi
-
-[[ -f $HOME/.bashrc_extra ]] && source $HOME/.bashrc_extra
-
-#function cd(){
-#    if [[ $# -eq 0 ]]; then
-#        builtin cd $(git rev-parse --show-toplevel 2> /dev/null)
-#    else
-#        builtin cd "$@"
-#    fi
-#}
 
 function ve() {
     # Use cwd for virtualenv name
@@ -174,9 +157,7 @@ function ve() {
     [[ -f dev_requirements.txt ]] && $(which pip) install -r dev_requirements.txt &> /dev/null
 
     # Install monetization requirements if available
-    echo "should install apps.txt"
     if [[ -f monetization/requirements/apps.txt ]]; then
-        echo "installing apps.txt"
         $(which pip) install -r monetization/requirements/apps.txt 
     fi
 }
