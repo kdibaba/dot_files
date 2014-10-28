@@ -20,32 +20,32 @@ Bundle 'gmarik/vundle'
 Bundle 'saltstack/salt-vim'
 
 " Helpful plugins
-" Bundle 'Lokaltog/vim-easymotion'
-" Bundle 'Lokaltog/vim-powerline'
+Bundle 'Lokaltog/vim-easymotion'
+Bundle 'Lokaltog/vim-powerline'
 Bundle 'ervandew/supertab'
 Bundle 'jistr/vim-nerdtree-tabs'
-" Bundle 'mileszs/ack.vim'
-" Bundle 'phleet/vim-mercenary'
-" Bundle 'scrooloose/nerdcommenter'
+Bundle 'mileszs/ack.vim'
+Bundle 'phleet/vim-mercenary'
+Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
-" Bundle 'sjl/gundo.vim'
-" Bundle 'tpope/vim-abolish'
-" Bundle 'tpope/vim-eunuch'
-" Bundle 'tpope/vim-fugitive'
-" Bundle 'tpope/vim-repeat'
-" Bundle 'tpope/vim-speeddating'
-" Bundle 'tpope/vim-surround'
-" Bundle 'tpope/vim-endwise'
-" Bundle 'walm/jshint.vim'
-" Bundle 'aaronbieber/quicktask'
-" Bundle 'davidhalter/jedi-vim'
-" Bundle 'kchmck/vim-coffee-script'
-" Bundle 'xolox/vim-misc'
-" Bundle 'airblade/vim-gitgutter'
-" Bundle 'nathanaelkane/vim-indent-guides'
-" Bundle 'michaeljsmith/vim-indent-object'
-" Bundle 'Rykka/riv.vim'
+Bundle 'sjl/gundo.vim'
+Bundle 'tpope/vim-abolish'
+Bundle 'tpope/vim-eunuch'
+Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-repeat'
+Bundle 'tpope/vim-speeddating'
+Bundle 'tpope/vim-surround'
+Bundle 'tpope/vim-endwise'
+Bundle 'walm/jshint.vim'
+Bundle 'aaronbieber/quicktask'
+Bundle 'davidhalter/jedi-vim'
+Bundle 'kchmck/vim-coffee-script'
+Bundle 'xolox/vim-misc'
+Bundle 'airblade/vim-gitgutter'
+Bundle 'nathanaelkane/vim-indent-guides'
+Bundle 'michaeljsmith/vim-indent-object'
+Bundle 'Rykka/riv.vim'
 
 scriptencoding utf-8
 set encoding=utf-8
@@ -82,7 +82,7 @@ highlight ExtraWhitespace ctermbg=red guibg=red
 "------------------------------------------------
 " Basic settings
 "------------------------------------------------
-let mapleader=","      " The leader key
+let mapleader=":"      " The leader key
 set mouse=a            " Allow mouse
 set nowrap             " No wrapping
 set showmatch          " Show matching brackets when inserted
@@ -142,34 +142,34 @@ set writebackup
 "------------------------------------------------
 
 " SuperTab settings
-" let g:SuperTabDefaultCompletionType = "context"
-"
+let g:SuperTabDefaultCompletionType = "context"
+
 " NerdTree settings
-"let g:nerdtree_tabs_open_on_console_startup = 1
-"
+" let g:nerdtree_tabs_open_on_console_startup = 1
+
 " Synstastic settings
 let g:syntastic_python_checkers=['pylint', 'flake8']
 let g:syntastic_python_flake8_args='--config ~/.flake8'
 let g:syntastic_python_pylint_args='--rcfile .pylintrc --msg-template="{path}:{line}: [{msg_id}] {msg}" -r n'
 
-" " Gundo settings
-" let g:gundo_preview_bottom = 1
-" let g:gundo_right = 1
-" let g:gundo_help = 0
-" let g:gundo_width = 25
-" let g:gundo_preview_height = 10
-"
-" " Eclim settings
-" let g:EclimProjectTreeAutoOpen = 0
-" let g:EclimProjectTreeSharedInstance = 1
-" let g:EclimBrowser = 'xombrero'
-" let g:EclimOpenUrlInVimPatterns =
-"   \ [
-"     \ '\.\(dtd\|xml\|xsd\)$',
-"     \ '\.txt$',
-"   \ ]
-" command -range -nargs=* Google call eclim#web#SearchEngine('http://www.google.com/search?q=<query>', <q-args>, <line1>, <line2>)
-" command -nargs=? Dictionary call eclim#web#WordLookup('http://dictionary.reference.com/search?q=<query>', '<args>')
+" Gundo settings
+let g:gundo_preview_bottom = 1
+let g:gundo_right = 1
+let g:gundo_help = 0
+let g:gundo_width = 25
+let g:gundo_preview_height = 10
+
+" Eclim settings
+let g:EclimProjectTreeAutoOpen = 0
+let g:EclimProjectTreeSharedInstance = 1
+let g:EclimBrowser = 'xombrero'
+let g:EclimOpenUrlInVimPatterns =
+  \ [
+    \ '\.\(dtd\|xml\|xsd\)$',
+    \ '\.txt$',
+  \ ]
+command -range -nargs=* Google call eclim#web#SearchEngine('http://www.google.com/search?q=<query>', <q-args>, <line1>, <line2>)
+command -nargs=? Dictionary call eclim#web#WordLookup('http://dictionary.reference.com/search?q=<query>', '<args>')
 
 " Indent Guides
 let g:indent_guides_guide_size = 1
@@ -177,9 +177,38 @@ let g:indent_guides_guide_size = 1
 "------------------------------------------------
 " Other settings
 "------------------------------------------------
+" Auto save and restore views for these files
+autocmd BufWinLeave *.sh mkview
+autocmd BufWinEnter *.sh silent loadview
+autocmd BufWinLeave *.c mkview
+autocmd BufWinEnter *.c silent loadview
+autocmd BufWinLeave *.h mkview
+autocmd BufWinEnter *.h silent loadview
+autocmd BufWinLeave *.h mkview
+autocmd BufWinEnter *.h silent loadview
+autocmd BufWinLeave *.py mkview
+autocmd BufWinEnter *.py silent loadview
+autocmd BufWinLeave *.java mkview
+autocmd BufWinEnter *.java silent loadview
+autocmd BufWinLeave *.js mkview
+autocmd BufWinEnter *.js silent loadview
+autocmd BufWinLeave *.coffee mkview
+autocmd BufWinEnter *.coffee silent loadview
+autocmd BufWinLeave *.sls mkview
+autocmd BufWinEnter *.sls silent loadview
+autocmd BufWinLeave *.rst mkview
+autocmd BufWinEnter *.rst silent loadview
+
 " Treat all html as htmldjango
 autocmd BufNewFile,BufRead *.html set filetype=htmldjango
 
+" Show extra which space and over 80
+match OverLength /\%80v.\+/
+match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
 
 " Fun with numbers
 autocmd FocusLost * :set number
