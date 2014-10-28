@@ -45,7 +45,7 @@ Bundle 'xolox/vim-misc'
 Bundle 'airblade/vim-gitgutter'
 Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'michaeljsmith/vim-indent-object'
-Bundle 'Rykka/riv.vim'
+" Bundle 'Rykka/riv.vim'
 
 scriptencoding utf-8
 set encoding=utf-8
@@ -82,7 +82,7 @@ highlight ExtraWhitespace ctermbg=red guibg=red
 "------------------------------------------------
 " Basic settings
 "------------------------------------------------
-let mapleader=":"      " The leader key
+let mapleader=","      " The leader key
 set mouse=a            " Allow mouse
 set nowrap             " No wrapping
 set showmatch          " Show matching brackets when inserted
