@@ -112,7 +112,7 @@ set ignorecase         " Ignore case in searched
 set smartcase          " Use case in search with capitals
 
 " Line number settings
-set relativenumber     " Start with relative numbers
+set number     " Start with relative numbers
 set numberwidth=3      " Use 3 columns for numbers
 
 " Cursor / visual settings
@@ -212,9 +212,9 @@ autocmd BufWinLeave * call clearmatches()
 
 " Fun with numbers
 autocmd FocusLost * :set number
-autocmd FocusGained * :set relativenumber
+autocmd FocusGained * :set number
 autocmd InsertEnter * :set number
-autocmd InsertLeave * :set relativenumber
+autocmd InsertLeave * :set number
 function! NumberToggle()
     if(&relativenumber == 1)
         set number
@@ -252,4 +252,5 @@ map <F9> :set paste! paste?<CR>
 map <F10> :set cursorline! cursorline?<CR>
 map <F11> :set spell! spell?<CR>
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
-map <silent> <C-n> :NERDTreeToggle<CR>
+map <silent> <C-n> :NERDTreeMirrorToggle<CR>
+nmap <CR> i<CR><Esc>

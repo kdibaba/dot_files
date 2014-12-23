@@ -92,6 +92,7 @@ alias tree='tree -Csuh'          #alternative to recursive ls
 alias df='df -kTh'
 alias path='echo -e ${PATH//:/\\n}'
 alias grep='grep --color=auto'
+alias cleangit='git branch --merged | grep -v "\*" | xargs -n 1 git branch -d'
 
 # Silly sudo
 alias mount='sudo mount'
