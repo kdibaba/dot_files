@@ -1,6 +1,6 @@
 [user]
-    name = Kiumma Dibaba
-    email = kdibaba@gmail.com
+	name = kdibaba
+	email = kdibaba@gmail.com
 [core]
     editor = vim
     excludesfile = ~/.gitignore_global
@@ -22,7 +22,7 @@
 [alias]
     glog = log --graph
     st = status
-    ci = commit -a
+	ci = commit -a
     up = checkout
     co = checkout
     sum = status
@@ -41,4 +41,6 @@
     last = log -1 HEAD
     uncommit = reset --soft 'HEAD^'
 [push]
-    default = current
+	default = simple
+[credential]
+	helper = cache --timeout=259200
