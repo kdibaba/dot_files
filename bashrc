@@ -141,6 +141,7 @@ function ve() {
     # If this virtualenv is not active
     if [[ "$VIRTUAL_ENV" != "$PWD/.pyenv/$venv_name" ]]; then
 
+        echo 'deactivating virtualenv'
         # Deactivate current virtualenv
         [[ $VIRTUAL_ENV ]] && deactivate
 
@@ -152,14 +153,14 @@ function ve() {
 
     fi
     # Install requirements.txt if available
-    [[ -f requirements.txt ]] && $(which pip) install -r requirements.txt &> /dev/null
+    [[ -f requirements.txt ]] && $(which pip) install -r requirements.txt
 
     # Install dev_requirements.txt if available
-    [[ -f dev_requirements.txt ]] && $(which pip) install -r dev_requirements.txt &> /dev/null
+    [[ -f dev_requirements.txt ]] && $(which pip) install -r dev_requirements.txt
 
     # Install monetization requirements if available
     if [[ -f monetization/requirements/apps.txt ]]; then
-        $(which pip) install -r monetization/requirements/apps.txt 
+        $(which pip) install -r monetization/requirements/apps.txt
     fi
 }
 
