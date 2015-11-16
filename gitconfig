@@ -42,3 +42,5 @@
     uncommit = reset --soft 'HEAD^'
 [credential]
 	helper = cache --timeout=259200
+[push]
+	default = simple
