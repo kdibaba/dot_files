@@ -76,6 +76,10 @@ if [[ -f $HOME/.bash-git-prompt/gitprompt.sh ]]; then
     source $HOME/.bash-git-prompt/gitprompt.sh
 fi
 
+if [ -f ~/.git-completion.bash ]; then
+  . ~/.git-completion.bash
+  fi
+
 # Aliases
 alias ls='ls -F --color=auto'    #colors
 alias l='ls -F --color=auto'    #colors
