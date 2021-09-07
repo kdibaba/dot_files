@@ -16,36 +16,21 @@ call vundle#rc(g:vim_home_path. "/bundle")
 " Bundles to install
 Bundle 'gmarik/vundle'
 
-" Syntax/filetype detection
-Bundle 'saltstack/salt-vim'
-
-" Helpful plugins
+"--------------------------------------------------
+" vetted bunldles
+"---------------------------------------------------
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'ervandew/supertab'
 Bundle 'jistr/vim-nerdtree-tabs'
-Bundle 'mileszs/ack.vim'
-Bundle 'phleet/vim-mercenary'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
-Bundle 'sjl/gundo.vim'
-Bundle 'tpope/vim-abolish'
-Bundle 'tpope/vim-eunuch'
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-repeat'
-Bundle 'tpope/vim-speeddating'
-Bundle 'tpope/vim-surround'
-Bundle 'tpope/vim-endwise'
-Bundle 'walm/jshint.vim'
-Bundle 'aaronbieber/quicktask'
-Bundle 'davidhalter/jedi-vim'
-Bundle 'kchmck/vim-coffee-script'
-Bundle 'xolox/vim-misc'
 Bundle 'airblade/vim-gitgutter'
 Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'michaeljsmith/vim-indent-object'
-" Bundle 'Rykka/riv.vim'
+Bundle 'atom/fuzzy-finder'
+Bundle 'ctrlpvim/ctrlp.vim'
 
 scriptencoding utf-8
 set encoding=utf-8
@@ -56,7 +41,7 @@ set encoding=utf-8
 set background=dark
 
 " Basic settings
-highlight Normal                                                         guifg=Green    guibg=Black
+highlight Normal                ctermfg=white ctermbg=NONE               guifg=white    guibg=#444444
 highlight LineNr     cterm=bold ctermfg=gray  ctermbg=NONE      gui=NONE guifg=DarkGrey guibg=NONE
 highlight Folded                ctermfg=59    ctermbg=NONE
 
@@ -71,7 +56,9 @@ highlight DiffText   cterm=bold ctermfg=black ctermbg=lightgray
 highlight DiffDelete cterm=bold ctermfg=black ctermbg=darkred
 
 " Underline the cursor line
-highlight CursorLine ctermbg=darkgrey cterm=NONE
+highlight CursorLine ctermbg=red cterm=NONE guibg=darkgrey gui=NONE
+:autocmd InsertEnter * highlight CursorLine ctermbg=NONE cterm=underline guibg=NONE gui=underline ctermfg=NONE
+:autocmd InsertLeave * highlight CursorLine ctermbg=30  cterm=NONE guibg=30 gui=NONE ctermfg=NONE
 
 " Extra white space
 highlight OverLength      ctermbg=red
@@ -93,6 +80,13 @@ set foldmethod=syntax  " Fold based on syntax
 set foldlevel=999      " Start with folds open
 set t_Co=256           " Force 256 colors
 set scrolloff=999      " Keep cursor at center
+
+" Syntastic settings
+set statusline+=%#warningmsg#
+"let g:syntastic_python_checkers=['pylint', 'flake8']
+let g:syntastic_python_checkers=['pylint']
+let g:syntastic_python_pylint_args='--rcfile=~/.pylintrc'
+let g:syntastic_always_populate_loc_list = 1
 
 " Tab settings
 set expandtab          " Expand tabs into spaces
@@ -145,34 +139,18 @@ set writebackup
 let g:SuperTabDefaultCompletionType = "context"
 
 " NerdTree settings
-" let g:nerdtree_tabs_open_on_console_startup = 1
+let g:nerdtree_tabs_open_on_console_startup = 1
+let NERDTreeShowHidden=1
 
-" Synstastic settings
-let g:syntastic_python_checkers=['pylint', 'flake8']
-let g:syntastic_python_flake8_args='--config ~/.flake8'
-let g:syntastic_python_pylint_args='--rcfile .pylintrc --msg-template="{path}:{line}: [{msg_id}] {msg}" -r n'
-
-" Gundo settings
-let g:gundo_preview_bottom = 1
-let g:gundo_right = 1
-let g:gundo_help = 0
-let g:gundo_width = 25
-let g:gundo_preview_height = 10
-
-" Eclim settings
-let g:EclimProjectTreeAutoOpen = 0
-let g:EclimProjectTreeSharedInstance = 1
-let g:EclimBrowser = 'xombrero'
-let g:EclimOpenUrlInVimPatterns =
-  \ [
-    \ '\.\(dtd\|xml\|xsd\)$',
-    \ '\.txt$',
-  \ ]
-command -range -nargs=* Google call eclim#web#SearchEngine('http://www.google.com/search?q=<query>', <q-args>, <line1>, <line2>)
-command -nargs=? Dictionary call eclim#web#WordLookup('http://dictionary.reference.com/search?q=<query>', '<args>')
+" Powerline settings
+let g:Powerline_symbols = 'fancy'
 
 " Indent Guides
+let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_guide_size = 1
+let g:indent_guides_auto_colors = 0
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=84
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=51
 
 "------------------------------------------------
 " Other settings
@@ -202,8 +180,8 @@ autocmd BufWinEnter *.rst silent loadview
 " Treat all html as htmldjango
 autocmd BufNewFile,BufRead *.html set filetype=htmldjango
 
-" Show extra which space and over 80
-match OverLength /\%80v.\+/
+" Show extra which space and over 120
+match OverLength /\%120v.\+/
 match ExtraWhitespace /\s\+$/
 autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
@@ -246,11 +224,12 @@ map <F4> :set hlsearch! hlsearch?<CR>
 map <F5> :edit <CR>
 map <F6> :edit! <CR>
 nmap <F12> :NERDTreeTabsToggle <CR>
-nmap <F7> :GundoToggle <CR>
 map <F8> :set expandtab! expandtab?<CR>
 map <F9> :set paste! paste?<CR>
 map <F10> :set cursorline! cursorline?<CR>
 map <F11> :set spell! spell?<CR>
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 map <silent> <C-n> :NERDTreeMirrorToggle<CR>
+map <silent> <C-i> :IndentGuidesToggle<CR>
+map <silent><leader>e :lnext<CR>
 nmap <CR> i<CR><Esc>
