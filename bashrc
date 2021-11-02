@@ -100,6 +100,7 @@ alias cleangit='git branch --merged | grep -v "\*" | xargs -n 1 git branch -d'
 
 # Silly sudo
 alias mount='sudo mount'
+alias mount='sudo mdadm'
 alias umount='sudo umount'
 alias emerge='sudo emerge'
 alias eix='sudo eix -F'
@@ -132,13 +133,13 @@ alias got='git'
 
 # Django shortcuts
 alias runserver="./manage.py runserver"
-alias prunserver="./manage.py runserver 0.0.0.0:8000"
+alias runsslserver="./manage.py runsslserver 0.0.0.0:1115"
 
 # Get some bash completion
 # Use eselect bashcomp to manage symlinks
 [[ -f /etc/profile.d/bash-completion.sh ]] && source /etc/profile.d/bash-completion.sh
 
-function ve() {
+function venv() {
     # Use cwd for virtualenv name
     venv_name=${PWD##*/}
 
@@ -166,6 +167,30 @@ function ve() {
     if [[ -f monetization/requirements/apps.txt ]]; then
         $(which pip) install -r monetization/requirements/apps.txt
     fi
+}
+
+function ve() {
+    # Use cwd for virtualenv name
+    venv_name=${PWD##*/}
+    venv_name+="_venv"
+
+    # If this virtualenv is not active
+    if [[ "$VIRTUAL_ENV" != "$PWD/../$venv_name" ]]; then
+
+        echo 'deactivating virtualenv'
+        # Deactivate current virtualenv
+        [[ $VIRTUAL_ENV ]] && deactivate
+
+        # Create new virtualenv if needed
+        [[ ! -f ../$venv_name/bin/activate ]] && python3.8 -m venv ../$venv_name
+
+        # Activate virtualenv
+        source ../$venv_name/bin/activate
+
+    fi
+    # Install requirements.txt if available
+    [[ -f requirements.txt ]] && $(which pip) install -r requirements.txt
+
 }
 
 function rmpyc() {
