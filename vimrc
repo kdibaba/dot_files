@@ -56,9 +56,9 @@ highlight DiffText   cterm=bold ctermfg=black ctermbg=lightgray
 highlight DiffDelete cterm=bold ctermfg=black ctermbg=darkred
 
 " Underline the cursor line
-highlight CursorLine ctermbg=red cterm=NONE guibg=darkgrey gui=NONE
+highlight CursorLine ctermbg=237 cterm=NONE guibg=darkgrey gui=NONE
 :autocmd InsertEnter * highlight CursorLine ctermbg=NONE cterm=underline guibg=NONE gui=underline ctermfg=NONE
-:autocmd InsertLeave * highlight CursorLine ctermbg=30  cterm=NONE guibg=30 gui=NONE ctermfg=NONE
+:autocmd InsertLeave * highlight CursorLine ctermbg=237  cterm=NONE guibg=237 gui=NONE ctermfg=NONE
 
 " Extra white space
 highlight OverLength      ctermbg=red
@@ -70,7 +70,7 @@ highlight ExtraWhitespace ctermbg=red guibg=red
 " Basic settings
 "------------------------------------------------
 let mapleader=","      " The leader key
-set mouse=a            " Allow mouse
+set mouse=r            " Allow mouse
 set nowrap             " No wrapping
 set showmatch          " Show matching brackets when inserted
 set splitbelow         " Default splits to below
