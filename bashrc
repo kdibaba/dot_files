@@ -97,43 +97,28 @@ alias df='df -kTh'
 alias path='echo -e ${PATH//:/\\n}'
 alias grep='grep --color=auto'
 alias cleangit='git branch --merged | grep -v "\*" | xargs -n 1 git branch -d'
+alias refresh='source ~/.bashrc'
+alias df='df -x"squashfs"'
+alias dfc='dfc -t "-squashfs" -sfwW -q mount'
+alias bashedit='vim ~/.bashrc'
+alias vimedit='vim ~/.vimrc'
 
 # Silly sudo
+alias ipmitool='sudo ipmitool'
+alias snapraid='sudo snapraid'
 alias mount='sudo mount'
-alias mount='sudo mdadm'
+alias mdadm='sudo mdadm'
 alias umount='sudo umount'
-alias emerge='sudo emerge'
-alias eix='sudo eix -F'
-alias eix-sync='sudo eix-sync'
-alias eix-update='sudo eix-update'
-alias rc-update='sudo rc-update'
-alias revdep-rebuild='sudo revdep-rebuild'
-alias salt='sudo salt'
-alias salt-key='sudo salt-key'
-alias salt-cloud='sudo salt-cloud'
-alias salt-run='sudo salt-run'
-alias salt-call='sudo salt-call'
-alias hald='sudo hald --daemon=yes --verbose=yes'
+alias blkid='sudo blkid'
 
 # Program defaults
 alias preview='feh -g 700x700 -d'
 alias mkisofs-qick='mkisofs -R -l -J'
 alias bundleupdate='vim -c BundleUpdate -c qa'
 
-# To keep typos alive
-alias snv="svn"
-alias cim="vim"
-alias bim="vim"
-alias svim="vim"
-alias vom="vim"
-alias suod="sudo"
-alias sduo="sudo"
-alias vm="mv"
-alias got='git'
-
 # Django shortcuts
 alias runserver="./manage.py runserver"
-alias runsslserver="./manage.py runsslserver 0.0.0.0:1115"
+alias runsslserver="./manage.py runsslserver 0.0.0.0:1116"
 
 # Get some bash completion
 # Use eselect bashcomp to manage symlinks

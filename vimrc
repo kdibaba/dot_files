@@ -58,7 +58,7 @@ highlight DiffDelete cterm=bold ctermfg=black ctermbg=darkred
 " Underline the cursor line
 highlight CursorLine ctermbg=237 cterm=NONE guibg=darkgrey gui=NONE
 :autocmd InsertEnter * highlight CursorLine ctermbg=NONE cterm=underline guibg=NONE gui=underline ctermfg=NONE
-:autocmd InsertLeave * highlight CursorLine ctermbg=237  cterm=NONE guibg=237 gui=NONE ctermfg=NONE
+:autocmd InsertLeave * highlight CursorLine ctermbg=237  cterm=NONE guibg=darkgrey gui=NONE ctermfg=NONE
 
 " Extra white space
 highlight OverLength      ctermbg=red
