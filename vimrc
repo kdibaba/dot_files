@@ -139,7 +139,7 @@ set writebackup
 let g:SuperTabDefaultCompletionType = "context"
 
 " NerdTree settings
-let g:nerdtree_tabs_open_on_console_startup = 1
+let g:nerdtree_tabs_open_on_console_startup = 0
 let NERDTreeShowHidden=1
 
 " Powerline settings

@@ -81,7 +81,6 @@ if [ -f ~/.git-completion.bash ]; then
   fi
 
 # Aliases
-alias ls='ls -F --color=auto'    #colors
 alias l='ls -F --color=auto'    #colors
 alias ll='ls -lsah --color=auto'  #long list
 alias la='ls -AF --color=auto'  #show hidden
@@ -99,7 +98,7 @@ alias grep='grep --color=auto'
 alias cleangit='git branch --merged | grep -v "\*" | xargs -n 1 git branch -d'
 alias refresh='source ~/.bashrc'
 alias df='df -x"squashfs"'
-alias dfc='dfc -t "-squashfs" -sfwW -q mount'
+alias dfcq='dfc -t "-squashfs" -sfwW -q mount'
 alias bashedit='vim ~/.bashrc'
 alias vimedit='vim ~/.vimrc'
 
